@@ -1,60 +1,54 @@
-package p2DAO;
-
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 public class Main {
 	public static void main(String[] args) {
-		try {
-			ReizigerOracleDAOImpl db = new ReizigerOracleDAOImpl();		
-			OvChipkaartOracleDAOImpl dbo = new OvChipkaartOracleDAOImpl();	
-			
-			OvChipkaart o1 = new OvChipkaart();
-			o1.setKaartNummer(1234567);
-			o1.setKlasse(1);
-			o1.setReizigerId(2);
-			o1.setSaldo(20.01);
-			dbo.save(o1);
-			
-			for (OvChipkaart ov : dbo.findByReiziger(2)) {
-				System.out.println(ov.getKaartNummer());
-			}
-			
-			Reiziger r1 = new Reiziger();
-			Reiziger r2 = new Reiziger();
-			Reiziger r3 = new Reiziger();
-			
-			Date datum1 = new SimpleDateFormat("dd/mm/yyyy").parse("12/02/2017");
-			r1.setNaam("Mustafa Toprak");
-			r1.setVoorletters("MA");
-			r1.setGBdatum(datum1);
-			r1 = db.save(r1);
-			
-			r2.setNaam("Tester 2");
-			r2 = db.save(r2);
+		// Dit roep ik aan om de reizigers in op te slaan
+		ReizigerOracleDAOImpl obj = new ReizigerOracleDAOImpl();
 
-			r3.setNaam("Tester 3");
-			r3 = db.save(r3);
+		// Reizigers aanmaken
+		Reiziger r1 = new Reiziger("Richard", Date.valueOf("1998-09-29"));
+		Reiziger r2 = new Reiziger("Karel", Date.valueOf("2000-09-15"));
+		Reiziger r3 = new Reiziger("Anton", Date.valueOf("1970-09-15"));
+		Reiziger r4 = new Reiziger("Isaac", Date.valueOf("1970-09-15"));
 
-			for (Reiziger reiziger : db.findAll()) {
-				System.out.println(reiziger.getNaam());
-			}
+		// Hier worden reizigers opgeslagen in de List<Reiziger> van obj
+		obj.save(r1);
+		obj.save(r2);
+		obj.save(r3);
+		obj.save(r4);
 
-			System.out.println("Done");
-			
-			r2.setNaam("Jacob Dubbel");
-			db.update(r2);
+		System.out.println("Alle reizigers:");
+		// For loop om de opgeslagen reizigers te laten zien
+		for (Reiziger r : obj.findAll()) {
+			System.out.println(r.getNaam() + " " + r.getGBdatum());
+		}
 
-			for (Reiziger reiziger : db.findAllByGBdatum("22-10-2002")) {
-				System.out.println(reiziger.getNaam());
-			}
-			System.out.println("Datum done");
-			
-			db.delete(r3);
-			System.out.println("Klaar");
-		} catch (ParseException e) {
-			e.printStackTrace();
+		System.out.println();
+		// For loop om de reizigers te laten zien gefilterd op geboortedatum
+		System.out.println("Reizigers gefilterd op geboortedatum:");
+		for (Reiziger r : obj.findByGBdatum("1970-09-15")) {
+			System.out.println(r.getNaam() + " " + r.getGBdatum());
+		}
+
+		// Reizigers worden hier geupdatet
+		obj.update(r1).setNaam("Richard(Update)");
+		obj.update(r1).setGBdatum(Date.valueOf("1998-12-29"));
+
+		System.out.println();
+		System.out.println("Reizigers na het updaten:");
+		// For loop om te laten zien dat de reizigers zijn geupdatet
+		for (Reiziger r : obj.findAll()) {
+			System.out.println(r.getNaam() + " " + r.getGBdatum());
+		}
+
+		// Verwijderen van de 3e reiziger
+		obj.delete(r3);
+
+		System.out.println();
+		System.out.println("Reizigers na het verwijderen:");
+		// For loop om te laten zien dat r3 is verwijderd
+		for (Reiziger r : obj.findAll()) {
+			System.out.println(r.getNaam() + " " + r.getGBdatum());
 		}
 	}
 }
