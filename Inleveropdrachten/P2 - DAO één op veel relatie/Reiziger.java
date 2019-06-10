@@ -1,54 +1,29 @@
 package p2DAO;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Reiziger {
-	private int reizigerId;
 	private String naam;
 	private Date gbdatum;
-	private String voorletters;
-	public String getVoorletters() {
-		return voorletters;
-	}
 
-	public void setVoorletters(String voorletters) {
-		this.voorletters = voorletters;
-	}
-
-	private ArrayList<OvChipkaart> ovKaarten = new ArrayList<OvChipkaart>();
-
-	public Reiziger() {
-
-	}
-	
-	public int getReizigerId() {
-		return reizigerId;
-	}
-	
-	public void setReizigerId(int reizigerId) {
-		this.reizigerId = reizigerId;
+	public Reiziger(String naam, Date gbdatum) {
+		this.naam = naam;
+		this.gbdatum = gbdatum;
 	}
 
 	public String getNaam() {
 		return naam;
 	}
 
-	public void setNaam(String naam) {
-		this.naam = naam;
+	public void setNaam(String nm) {
+		this.naam = nm;
 	}
 
 	public Date getGBdatum() {
 		return gbdatum;
 	}
 
-	public void setGBdatum(Date gbdatum) {
-		this.gbdatum = gbdatum;
-	}
-	
-	public void voegOvToe(OvChipkaart ov) {
-		if (!this.ovKaarten.contains(ov)) {
-			this.ovKaarten.add(ov);
-		}
+	public void setGBdatum(Date dt) {
+		this.gbdatum = dt;
 	}
 }
