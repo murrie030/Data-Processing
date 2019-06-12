@@ -11,13 +11,6 @@ public class Reiziger {
 	public Reiziger() {
 	};
 
-	public Reiziger(String naam, String gbdatum) {
-		this.gbdatum = gbdatum;
-		this.naam = naam;
-		ovKaarten = new ArrayList<OvChipkaart>();
-
-	}
-
 	public Reiziger(String naam, String gbdatum, int reizigerId) { 
 		this.naam = naam;
 		this.gbdatum = gbdatum;
@@ -64,6 +57,7 @@ public class Reiziger {
 			this.ovKaarten.add(ov);
 		}
 	}
+	
 	public String toString() {
 		String s = "Naam: " + naam + " , Geboortedatum: " + gbdatum;
 		return s;
